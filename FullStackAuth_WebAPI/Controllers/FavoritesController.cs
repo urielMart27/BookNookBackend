@@ -61,8 +61,33 @@ namespace FullStackAuth_WebAPI.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-        }
 
+
+        }
+        [HttpDelete("{id}"), Authorize]
+        public IActionResult DeleteFavorite(int id)
+        {
+            try
+            {
+                string userId = User.FindFirstValue("id");
+
+                var favoriteToDelete = _context.Favorites
+                    .Where(f => f.Id == id && f.UserId == userId)
+                    .FirstOrDefault();
+
+                if (favoriteToDelete == null)
+                {
+                    return NotFound();
+                }
+                _context.Favorites.Remove(favoriteToDelete);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
     }
 }

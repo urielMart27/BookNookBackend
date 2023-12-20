@@ -49,12 +49,10 @@ namespace FullStackAuth_WebAPI.Controllers
                     UserHasFavorited = userHasFavorited
                 };
 
-                // Return the list of cars as a 200 OK response
                 return StatusCode(200, bookDetailsDto);
             }
             catch (Exception ex)
             {
-                // If an error occurs, return a 500 internal server error with the error message
                 return StatusCode(500, ex.Message);
             }
         }
