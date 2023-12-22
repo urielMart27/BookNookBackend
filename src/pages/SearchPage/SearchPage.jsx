@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import useCustomForm from "../../hooks/useCustomForm";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 
 const SearchPage = ({OnSearch}) => {
@@ -18,9 +19,10 @@ const SearchPage = ({OnSearch}) => {
 
 
     return(
-        <>
+        <SearchBar OnSearch={handleSearch}
+        />
         <p> Search Page</p>
-        </>
+        />
     )
 }
 
