@@ -1,5 +1,5 @@
 // General Imports
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
 // Pages Imports
@@ -19,8 +19,12 @@ function App() {
   return (
     <div>
       <Navbar />
+      <nav>
+        <Link to="/search">Search</Link>
+        <Link to="/favorites">Favorites</Link>
+      </nav>
       <Routes>
-        <Route 
+        <Route
           path="/"
           element={
             <PrivateRoute>
@@ -29,13 +33,14 @@ function App() {
           }
         />
         <Route
-          path="/add"
+          path="/search"
           element={
             <PrivateRoute>
               <SearchPage />
             </PrivateRoute>
           }
         />
+
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
