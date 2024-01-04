@@ -2,8 +2,9 @@ import React from "react";
 
 const SearchBar = ({ searchInput, OnSearch, onChange }) => {
   return (
-    <div>
+    <div className="search-bar">
       <input
+        className="search-bar"
         type="text"
         placeholder="Search ..."
         value={searchInput}

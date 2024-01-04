@@ -30,7 +30,8 @@ const HomePage = () => {
   return (
     <div className="container">
       {console.log(user)}
-      <h1>Home Page for {user.userName}!</h1>
+      <h1>Welcome to BookNook, {user.userName}!</h1>
+      <h3>Please use the navigation bar to Search or go to Favorites</h3>
       {cars &&
         cars.map((car) => (
           <p key={car.id}>

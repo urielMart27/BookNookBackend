@@ -6,6 +6,8 @@ import "./App.css";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import BookDetailsPage from "./components/BookDetailsPage/BookDetailsPage";
+import FavoritesPage from "./pages/FavoritesPage/FavoritesPage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 
 // Component Imports
@@ -19,10 +21,6 @@ function App() {
   return (
     <div>
       <Navbar />
-      <nav>
-        <Link to="/search">Search</Link>
-        <Link to="/favorites">Favorites</Link>
-      </nav>
       <Routes>
         <Route
           path="/"
@@ -37,6 +35,22 @@ function App() {
           element={
             <PrivateRoute>
               <SearchPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <PrivateRoute>
+              <FavoritesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/books/:id"
+          element={
+            <PrivateRoute>
+              <BookDetailsPage />
             </PrivateRoute>
           }
         />

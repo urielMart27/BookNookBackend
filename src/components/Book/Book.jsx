@@ -1,9 +1,11 @@
 import React from "react";
 
-const Book = ({ book }) => {
+const Book = ({ title, authors, description }) => {
   return (
     <div>
-      <h3>{book.volumeInfo.title}</h3>
+      <h2>{title}</h2>
+      <p>Author: {authors && authors.join(",")}</p>
+      <p>{description}</p>
     </div>
   );
 };
