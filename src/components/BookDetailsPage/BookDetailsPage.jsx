@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import Book from "../Book/Book";
 import ReviewList from "../ReviewList/ReviewList";
 import ReviewForm from "../ReviewForm/ReviewForm";
 
-const BookDetailsPage = ({ match }) => {
-  const { params } = match;
-  const { id } = params;
+const BookDetailsPage = ({}) => {
+  const { bookId } = useParams();
+  const [user, token] = useAuth();
   const [bookDetails, setBookDetails] = useState({});
-  const [reviews, setReviews] = useState([]);
+  const [bookInfo, setBookInfo] = useState([]);
 
   useEffect(() => {
-    console.log("Book Details Page ID:", id);
+    console.log("Book Details Page ID:", bookId);
     const fetchBookDetails = async () => {
       try {
         const response = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes/${id}`
+          `https://www.googleapis.com/books/v1/volumes/${bookId}`
         );
         setBookDetails(response.data.volumeInfo || {});
       } catch (error) {
         console.error("Error fetching book details", error);
       }
     };
-
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get(
-          `https://localhost:3306/api/reviews?bookId=${id}`
-        );
-        setReviews(response.data || []);
-      } catch (error) {
-        console.error("Error fetching reviews", error);
-      }
-    };
-
     fetchBookDetails();
-    fetchReviews();
-  }, [id]);
+    fetchBookInfo();
+  }, [bookId]);
+
+  const fetchBookInfo = async () => {
+    try {
+      const response = await axios.get(
+        `https://localhost:5001/api/bookdetails/${bookId}`
+      );
+      console.log(response);
+      setBookInfo(response.data);
+    } catch (error) {
+      console.error("Error fetching reviews", error);
+    }
+  };
 
   const { volumeInfo = {} } = bookDetails;
   return (
@@ -50,8 +51,8 @@ const BookDetailsPage = ({ match }) => {
         authors={bookDetails.authors}
         description={bookDetails.description}
       />
-      <ReviewList reviews={reviews} />
-      <ReviewForm bookId={id} />
+      {bookInfo.reviews && <ReviewList reviews={bookInfo.reviews} />}
+      <ReviewForm bookId={bookId} fetchBookInfo={fetchBookInfo} token={token} />
     </div>
   );
 };

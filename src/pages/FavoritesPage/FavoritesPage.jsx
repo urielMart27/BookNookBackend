@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 import FavoritesList from "../../components/FavoritesList/FavoritesList";
 
 const FavoritesPage = () => {
+  const [user, token] = useAuth();
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await axios.get();
-
-        setFavorites(response.data || []);
+        const response = await axios.get(
+          "https://localhost:5001/api/favorites",
+          { headers: { Authorization: "Bearer " + token } }
+        );
+        setFavorites(response.data);
       } catch (error) {
         console.error("Error Fetching Favorites", error);
       }

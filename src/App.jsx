@@ -47,7 +47,7 @@ function App() {
           }
         />
         <Route
-          path="/books/:id"
+          path="/books/:bookId"
           element={
             <PrivateRoute>
               <BookDetailsPage />

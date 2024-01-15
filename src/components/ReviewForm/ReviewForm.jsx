@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ReviewForm = ({ bookId }) => {
+const ReviewForm = ({ bookId, fetchBookInfo, token }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("");
   const [submiting, setSubmiting] = useState(false);
@@ -15,15 +15,24 @@ const ReviewForm = ({ bookId }) => {
     try {
       setSubmiting(true);
 
-      await axios.post("https://localhost:3306/api/reviews", {
-        bookId,
-        comment,
-        rating,
-      });
+      const response = await axios.post(
+        "https://localhost:5001/api/reviews",
+        {
+          BookId: bookId,
+          Text: comment,
+          Rating: rating,
+        },
+        {
+          headers: { Authorization: "Bearer " + token },
+        }
+      );
+      console.log(response);
 
-      console.log("Review Submitted");
+      if (response.status == 201) {
+        fetchBookInfo();
+      }
     } catch (error) {
-      console.error("Error sibmitting review", error);
+      console.error("Error submitting review", error);
     } finally {
       setSubmiting(false);
     }

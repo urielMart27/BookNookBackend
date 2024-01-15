@@ -5,7 +5,9 @@ const ReviewList = ({ reviews }) => {
     <div>
       {reviews.map((review) => (
         <div key={review.id}>
-          <p>{review.comment}</p>
+          <p>{review.user}</p>
+          <p>{review.text}</p>
+          <p>{review.rating}</p>
         </div>
       ))}
     </div>
